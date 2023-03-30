@@ -5,22 +5,38 @@ const PropertySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image: {
+  address2: {
     type: String,
-    require: true,
+    required: false,
   },
-  cloudinaryId: {
-    type: String,
-    require: true,
-  },
-  caption: {
+  city: {
     type: String,
     required: true,
   },
-  likes: {
-    type: Number,
+  state: {
+    type: String,
     required: true,
   },
+  zip: {
+    type: String,
+    required: true,
+  },
+  // image: {
+  //   type: String,
+  //   required: false,
+  // },
+  // cloudinaryId: {
+  //   type: String,
+  //   required: false,
+  // },
+  // caption: {
+  //   type: String,
+  //   required: false,
+  // },
+  // likes: {
+  //   type: Number,
+  //   required: false,
+  // },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

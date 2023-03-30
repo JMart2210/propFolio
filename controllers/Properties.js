@@ -32,16 +32,21 @@ module.exports = {
   createProperty: async (req, res) => {
     try {
       // Upload image to cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path);
-
+      // const result = await cloudinary.uploader.upload(req.file.path);
       await Property.create({
         address: req.body.address,
-        image: result.secure_url,
-        cloudinaryId: result.public_id,
-        caption: req.body.caption,
-        likes: 0,
+        address2: req.body.address2,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip,
+        // image: result.secure_url,
+        // cloudinaryId: result.public_id,
+        // caption: req.body.caption,
+        // likes: 0,
         user: req.user.id,
       });
+      console.log(req.body)
+      console.log(req.user)
       console.log("Property has been added!");
       res.redirect("/profile");
     } catch (err) {

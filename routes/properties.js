@@ -7,7 +7,7 @@ const { ensureAuth, ensureGuest } = require("../middleware/auth");
 //Property Routes - simplified for now
 router.get("/:id", ensureAuth, propertiesController.getProperty);
 
-router.post("/createProperty", upload.single("file"), propertiesController.createProperty);
+router.post("/createProperty", propertiesController.createProperty);
 
 router.put("/likeProperty/:id", propertiesController.likeProperty);
 
