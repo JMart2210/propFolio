@@ -27,7 +27,7 @@
         <% for(var i=0; i<properties.length; i++) {%>
           <li class="col-6 justify-content-between mt-5">
             <a href="/property/<%= properties[i]._id%>">
-              <img class="img-fluid" src="<%= properties[i].image%>">
+              <p><%= properties[i].address%></p>
             </a>
           </li>
         <% } %>
