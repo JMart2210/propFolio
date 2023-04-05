@@ -45,8 +45,6 @@ module.exports = {
         // likes: 0,
         user: req.user.id,
       });
-      console.log(req.body)
-      console.log(req.user)
       console.log("Property has been added!");
       res.redirect("/profile");
     } catch (err) {
