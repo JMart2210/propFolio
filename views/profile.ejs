@@ -2,28 +2,16 @@
 <%- include('partials/nav') -%>
 <div class="container">
   <h1>profile.ejs</h1>
-  <div class="row mt-5">
+  <div class="mt-5">
       <div class="col-6">
           <div>
               <p><strong>User Name</strong>: <%= user.userName %></p>
               <p><strong>Email</strong>: <%= user.email %></p>
-              <a href="/logout" class="col-3 btn btn-primary">Logout</a>
-          </div>
-          <div class="mt-5">
-            <h2>Add a property</h2>
-            <form action="/property/createProperty" enctype="multipart/form-data" method="POST">
-                  <label for="address" class="form-label">Address:</label>
-                  <textarea class="form-control" id="address" name="address"></textarea>
-                <label for="caption" class="form-label">Caption</label>
-                <textarea class="form-control" id="caption" name="caption"></textarea>
-                <label for="imgUpload" class="form-label">Image</label>
-                <input type="file" class="form-control" id="imageUpload" name="file">
-              <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
-            </form>
           </div>
       </div>
       <div class="col-6">
-        <ul class="row list-unstyled">
+        <h3>My Properties</h3>
+        <ol>
         <% for(var i=0; i<properties.length; i++) {%>
           <li class="col-6 justify-content-between mt-5">
             <a href="/property/<%= properties[i]._id%>">
@@ -31,10 +19,7 @@
             </a>
           </li>
         <% } %>
-        </ul>
-        <div class="row justify-content-center mt-5">
-          <a class="btn btn-primary" href="/feed">Return to Feed</a>
-        </div>  
+        </ol>
       </div>  
     </div>
   </div>

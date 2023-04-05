@@ -80,3 +80,8 @@ body{
 .visible{
   display: block;
 }
+
+.state-container{
+  display: flex;
+  justify-content: space-between;
+}
