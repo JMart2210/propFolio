@@ -5,7 +5,19 @@
   <div class="row justify-content-center mt-5">
     <div class="col-6">
       <h2><%= property.address %></h2>
-      <p><strong>Purchase Price</strong>: <%= property.price %></p>
+      <%if (property.attomInfo.sale.saleTransDate)  {%>
+      <p><strong>Acquired on</strong>: <%= property.attomInfo.sale.saleTransDate %></p>
+      <% } %>
+      <%if (property.attomInfo.sale.amount.saleamt)  {%>
+      <p><strong>Purchase Price</strong>: $<%= new Intl.NumberFormat().format(property.attomInfo.sale.amount.saleamt) %></p>
+      <% } %>
+      <% if (property.attomInfo.sale.mortgage?.FirstConcurrent?.amount !== undefined) { %>
+        <p><strong>Original Loan Amount</strong>: $<%= new Intl.NumberFormat().format(property.attomInfo.sale.mortgage.FirstConcurrent.amount) %></p>
+      <% } %>          
+      <%if (property.attomInfo?.avm?.amount?.low !== undefined)  {%>
+      <p><strong>Estimated Value</strong>: $<%= new Intl.NumberFormat().format(property.attomInfo.avm.amount.low) %></p>
+      <% } %>
+      <p>*Data pulled from the ATTOM api</p>
       
       <!-- <img class="img-fluid" src="<%= property.image%>" /> -->
       <div class="row justify-content-between">
@@ -25,7 +37,6 @@
     </div>
     <div class="col-6 mt-5">
       <a class="btn btn-primary" href="/profile">Return to Profile</a>
-      <a class="btn btn-primary" href="/feed">Return to Feed</a>
     </div>
   </div>
 </div>

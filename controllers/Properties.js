@@ -2,6 +2,8 @@ const cloudinary = require("../middleware/cloudinary");
 const Property = require("../models/Property");
 const Comment = require("../models/Comment");
 
+process.env.ATTOM_API_KEY
+
 module.exports = {
   getProfile: async (req, res) => {
     try {
@@ -31,26 +33,47 @@ module.exports = {
   },
   createProperty: async (req, res) => {
     try {
-      // Upload image to cloudinary
-      // const result = await cloudinary.uploader.upload(req.file.path);
-      await Property.create({
-        address: req.body.address,
-        address2: req.body.address2,
-        city: req.body.city,
-        state: req.body.state,
-        zip: req.body.zip,
-        // image: result.secure_url,
-        // cloudinaryId: result.public_id,
-        // caption: req.body.caption,
-        // likes: 0,
-        user: req.user.id,
-      });
-      console.log("Property has been added!");
-      res.redirect("/profile");
+      // Validate address input
+      const address = `${req.body.address}${req.body.address2 ? ` ${req.body.address2}` : ""}`;
+      const city = req.body.city;
+      const state = req.body.state;
+      const zip = req.body.zip;
+
+      // Define url & headers for attom api
+      const url = `https://api.gateway.attomdata.com/propertyapi/v1.0.0/attomavm/detail?address1=${address}&address2=${city} ${state}`
+      const headers = {
+        accept: "application/json",
+        apikey: process.env.ATTOM_API_KEY,
+      }
+
+      // Fetch data from attom api
+      const response = await fetch(url, { headers });
+      const data = await response.json();
+
+      if (response.ok && data.property) {
+        // Create Property object if API call is successful
+        await Property.create({
+          address,
+          city,
+          state,
+          zip,
+          user: req.user.id,
+          attomId: data.property[0].identifier.attomId || "N/A",
+          attomInfo: data.property[0] || "N/A",
+        });
+        console.log("Property has been added!");
+        res.redirect("/profile");
+      } else {
+        // Handle error if API call is unsuccessful
+        console.log(`Error: ${data.error}`);
+        res.status(response.status).send(`Error: ${data.error}`);
+      }
     } catch (err) {
       console.log(err);
+      res.status(500).send("Internal Server Error");
     }
   },
+
   likeProperty: async (req, res) => {
     try {
       await Property.findOneAndUpdate(
@@ -70,9 +93,9 @@ module.exports = {
       // Find property by id
       let property = await Property.findById({ _id: req.params.id });
       // Delete image from cloudinary
-      await cloudinary.uploader.destroy(property.cloudinaryId);
+      // await cloudinary.uploader.destroy(property.cloudinaryId);
       // Delete property from db
-      await Property.remove({ _id: req.params.id });
+      await Property.deleteOne({ _id: req.params.id });
       console.log("Deleted Property");
       res.redirect("/profile");
     } catch (err) {
