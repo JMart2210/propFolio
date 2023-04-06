@@ -41,7 +41,6 @@ module.exports = {
 
       // Define url & headers for attom api
       const url = `https://api.gateway.attomdata.com/propertyapi/v1.0.0/attomavm/detail?address1=${address}&address2=${city} ${state}`
-      console.log(url);
       const headers = {
         accept: "application/json",
         apikey: process.env.ATTOM_API_KEY,
