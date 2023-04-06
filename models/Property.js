@@ -45,6 +45,8 @@ const PropertySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  attomId: "string",
+  attomInfo: "object"
 });
 
 module.exports = mongoose.model("Property", PropertySchema);
