@@ -18,8 +18,12 @@ require("dotenv").config({ path: "./config/.env" });
 // Passport config
 require("./config/passport")(passport);
 
-//Connect To Database
-connectDB();
+//Connect To Database then have server Running. Cyclic is a serverless runtime so I chained listen method after DB connection to make sure that mongoose.connect is finished before allowing app to serve requests, per cyclic docs. (re:https://docs.cyclic.sh/how-to/using-mongo-db#connections-in-a-serverless-runtime)
+connectDB().then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log(`Server is running at Port:${process.env.PORT}, you better catch it!`);
+  });
+})
 
 //Using EJS for views
 app.set("view engine", "ejs");
@@ -58,8 +62,3 @@ app.use(flash());
 app.use("/", mainRoutes);
 app.use("/property", propertyRoutes);
 app.use("/comment", commentRoutes);
-
-//Server Running
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running at Port:${process.env.PORT}, you better catch it!`);
-});
