@@ -12,6 +12,9 @@ body{
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
   padding: 10px 25px;
 }
+.navbar > div {
+  justify-content: space-between;
+}
 
 .signup-page{
   background-color: #D9D9D9;

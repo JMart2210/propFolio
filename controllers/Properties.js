@@ -2,8 +2,6 @@ const cloudinary = require("../middleware/cloudinary");
 const Property = require("../models/Property");
 const Comment = require("../models/Comment");
 
-process.env.ATTOM_API_KEY
-
 module.exports = {
   getProfile: async (req, res) => {
     try {
