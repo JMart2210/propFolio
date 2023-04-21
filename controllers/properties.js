@@ -50,7 +50,7 @@ module.exports = {
 
       if (response.ok && data.property) {
         // Create Property object if API call is successful
-        await Property.create({
+        const createdProperty = await Property.create({
           address,
           city,
           state,
@@ -58,9 +58,13 @@ module.exports = {
           user: req.user.id,
           attomId: data.property[0].identifier.attomId || "N/A",
           attomInfo: data.property[0] || "N/A",
+          propertyValues:[{value: data.property[0].sale.amount.saleamt, date: new Date(data.property[0].sale.saleTransDate)}],
+          lastValue: data.property[0].sale.amount.saleamt,
+          dateValue: new Date(data.property[0].sale.saleTransDate),
         });
         console.log("Property has been added!");
-        res.redirect("/profile");
+        console.log(data)
+        res.redirect(`/property/${createdProperty._id}`);
       } else {
         // Handle error if API call is unsuccessful
         console.log(`Error: ${data.error}`);
@@ -72,16 +76,25 @@ module.exports = {
     }
   },
 
-  likeProperty: async (req, res) => {
+  updatePropertyValue: async (req, res) => {
     try {
-      await Property.findOneAndUpdate(
-        { _id: req.params.id },
-        {
-          $inc: { likes: 1 },
-        }
-      );
-      console.log("Likes +1");
-      res.redirect(`/property/${req.params.id}`);
+      const property = await Property.findById(req.params.id);
+      const newValue = req.body.value;
+      const newDate = req.body.date;
+      property.propertyValues.push({value: newValue, date: newDate});
+
+      property.propertyValues.sort((a, b) => new Date(b.date) - new Date(a.date));
+      property.lastValue = property.propertyValues[0].value;
+      property.dateValue = property.propertyValues[0].date;
+      await property.save();
+      // await Property.findOneAndUpdate(
+      //   { _id: req.params.id },
+      //   {
+          
+      //   }
+      // );
+      res.render("property.ejs", { property: property, user: req.user});
+      // res.redirect(`/property/${req.params.id}`);
     } catch (err) {
       console.log(err);
     }

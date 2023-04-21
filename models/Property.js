@@ -29,14 +29,6 @@ const PropertySchema = new mongoose.Schema({
   //   type: String,
   //   required: false,
   // },
-  // caption: {
-  //   type: String,
-  //   required: false,
-  // },
-  // likes: {
-  //   type: Number,
-  //   required: false,
-  // },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -46,7 +38,19 @@ const PropertySchema = new mongoose.Schema({
     default: Date.now,
   },
   attomId: "string",
-  attomInfo: "object"
+  attomInfo: "object",
+  propertyValues: [
+    {
+      value: {
+        type: Number,
+      },
+      date: {
+        type: Date,
+      },
+    },
+  ],
+  lastValue: "number",
+  dateValue: "date",
 });
 
 module.exports = mongoose.model("Property", PropertySchema);

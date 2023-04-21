@@ -9,7 +9,7 @@ router.get("/:id", ensureAuth, propertiesController.getProperty);
 
 router.post("/createProperty", propertiesController.createProperty);
 
-router.put("/likeProperty/:id", propertiesController.likeProperty);
+router.put("/updatePropertyValue/:id", propertiesController.updatePropertyValue);
 
 router.delete("/deleteProperty/:id", propertiesController.deleteProperty);
 

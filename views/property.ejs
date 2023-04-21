@@ -2,9 +2,36 @@
 <%- include('partials/nav') -%>
 <div class="container">
   <h1>property.ejs</h1>
-  <div class="row justify-content-center mt-5">
-    <div class="col-6">
+  <div >
+    <a class="btn btn-primary" href="/profile">Return to Profile</a>
+  </div>
+  <div class="row mt-5">
+    <div class="">
       <h2><%= property.address %></h2>
+        <%if(property.user == user.id){ %>
+          <form
+            action="/property/deleteProperty/<%=property.id %>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-primary" type="submit">Delete</button>
+          </form>
+          <%}%>
+        <p><strong>Last Valuation</strong>: $<%= new Intl.NumberFormat().format(property.lastValue) %>
+          <button id="updateValueBtn" class="btn-link">update valuation</button></p>
+          <div class="updateValueContainer hidden">
+            <form action="/property/updatePropertyValue/<%=property.id %>?_method=PUT" method="POST">
+              <div class="form-group">
+                <label for="inputValue">Value</label>
+                <input type="number" class="form-control" id="inputValue" placeholder="estimated value" name="value">
+            </div>
+            <div class="form-group">
+              <label for="inputDate">Date</label>
+              <input type="date" class="form-control" id="inputDate" name="date">
+            </div>
+            <button type="submit" class="btn btn-primary" value="Upload">Update Value</button>
+            </form>
+          </div>
+        <p><strong>Valuation Date</strong>: <%= property.dateValue.toLocaleDateString('en-us', { year:"numeric", month:"short"}) %> </p>
       <%if (property.attomInfo.sale.saleTransDate)  {%>
       <p><strong>Acquired on</strong>: <%= property.attomInfo.sale.saleTransDate %></p>
       <% } %>
@@ -15,31 +42,16 @@
         <p><strong>Original Loan Amount</strong>: $<%= new Intl.NumberFormat().format(property.attomInfo.sale.mortgage.FirstConcurrent.amount) %></p>
       <% } %>          
       <%if (property.attomInfo?.avm?.amount?.low !== undefined)  {%>
-      <p><strong>Estimated Value</strong>: $<%= new Intl.NumberFormat().format(property.attomInfo.avm.amount.low) %></p>
+      <p><strong>Current AVM</strong>: $<%= new Intl.NumberFormat().format(property.attomInfo.avm.amount.low) %></p>
       <% } %>
-      <p>*Data pulled from the ATTOM api</p>
-      
-      <!-- <img class="img-fluid" src="<%= property.image%>" /> -->
-      <div class="row justify-content-between">
-        <%if(property.user == user.id){ %>
-        <form
-          action="/property/deleteProperty/<%=property.id %>?_method=DELETE"
-          method="POST"
-          class="col-3"
-        >
-          <button class="btn btn-primary fa fa-trash" type="submit"></button>
-        </form>
-        <%}%>
-      </div>
-    </div>
-    <div class="col-3 mt-5">
-      <p><%= property.caption %></p>
-    </div>
-    <div class="col-6 mt-5">
-      <a class="btn btn-primary" href="/profile">Return to Profile</a>
+      <p>*AVM Data pulled from the ATTOM api</p>
     </div>
   </div>
+  <div>
+    <canvas id="myChart"></canvas>
+  </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/propertyAPI.js"></script>
 
 <%- include('partials/footer') -%>
