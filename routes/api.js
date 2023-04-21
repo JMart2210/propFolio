@@ -4,6 +4,6 @@ const upload = require("../middleware/multer");
 const apiController = require("../controllers/api");
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
-router.get("/data", ensureAuth, apiController.getValues);
+router.get("/data/:id", ensureAuth, apiController.getValues);
 
 module.exports = router;
