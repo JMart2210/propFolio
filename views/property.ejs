@@ -53,6 +53,10 @@
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/propertyAPI.js"></script>
+<!-- I passed data from the server-side to the client-side using window.propertyValues instead of making another fetch request -->
+<script>
+  window.propertyValues = <%- JSON.stringify(property.propertyValues) %>
+</script>
+<script src="/propertyAPI.js"> </script>
 
 <%- include('partials/footer') -%>
