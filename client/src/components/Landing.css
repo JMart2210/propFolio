@@ -1,0 +1,8 @@
+.container {
+  /* background-image: url(../public/imgs/propertyBG.jpg); */
+}
+.hero>div{
+  padding: 20px;
+  width: 50%;
+  text-align: left;
+}
