@@ -1,0 +1,106 @@
+html,
+body{
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.nav-logo {
+  width: 25%;
+  min-width: 150px;
+}
+.navbar{
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+  padding: 10px 25px;
+}
+.navbar > div {
+  justify-content: space-between;
+}
+.navbar-brand {
+  text-align: left;
+}
+
+.signup-page{
+  background-color: #D9D9D9;
+  margin: 0;
+  height: 100%;
+  padding: 75px;
+}
+.signup-container,
+.addPropertyContainer,
+.updateValueContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  max-width: 600px;
+  min-width: 300px;
+  border-radius: 5px;
+  padding: 25px 25px 50px;
+  box-shadow: 0px 0px 20px #888888;
+  margin: auto;
+}
+.addPropertyContainer,
+.updateValueContainer {
+  display: none;
+  position: absolute;
+  /* background-color: rgba(255, 255, 255, 0.813);
+  position: fixed;
+  padding: 10px 20px;
+  font-size: 3.5rem;
+  top: 20%;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; */
+}
+.signup-container > img{
+  max-width: 60%;
+  min-width: 200px;
+}
+.signup-container button{
+  width: 100%;
+  background-color: #41AF7F;
+  border-color: #41AF7F;
+  color: white;
+}
+.signup-container button:hover{
+  background-color: rgb(58, 154, 112);
+  border-color:  rgb(58, 154, 112);
+  color: white;
+}
+.signup-container button:focus,
+.signup-container button:focus-visible,
+.signup-container button:active{
+  background-color: rgb(47, 128, 93);
+  border-color: rgb(47, 128, 93);
+  box-shadow: 0 0 0 0.25rem rgb(58, 154, 112);
+  outline: none;
+}
+.btn-link {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  color: #0000EE;
+  padding: 0;
+  text-decoration: underline;
+  font-family: inherit;
+  font-size: inherit;
+}
+.blur {
+  background-size:cover;
+  -webkit-filter: blur(4px);
+  -moz-filter: blur(4px);
+  -ms-filter: blur(4px);
+  -o-filter: blur(4px);
+  filter: blur(4px);
+  }
+.visible{
+  display: block;
+}
+
+.state-container{
+  display: flex;
+  justify-content: space-between;
+}

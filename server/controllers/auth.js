@@ -58,7 +58,7 @@ exports.logout = (req, res) => {
 
 exports.getSignup = (req, res) => {
   if (req.user) {
-    return res.redirect("/profile");
+    return res.render("/profile");
   }
   res.render("signup", {
     title: "Create Account",
@@ -67,18 +67,21 @@ exports.getSignup = (req, res) => {
 
 exports.postSignup = (req, res, next) => {
   const validationErrors = [];
-  if (!validator.isEmail(req.body.email))
+  const { userName, email, password, confirmPassword } = req.body;
+
+  if (!validator.isEmail(email))
     validationErrors.push({ msg: "Please enter a valid email address." });
-  if (!validator.isLength(req.body.password, { min: 8 }))
+  if (!validator.isLength(password, { min: 8 }))
     validationErrors.push({
       msg: "Password must be at least 8 characters long",
     });
-  if (req.body.password !== req.body.confirmPassword)
+  if (password !== confirmPassword)
     validationErrors.push({ msg: "Passwords do not match" });
 
   if (validationErrors.length) {
-    req.flash("errors", validationErrors);
-    return res.redirect("../signup");
+    // req.flash("errors", validationErrors); removed for now
+    // return res.redirect("../signup");
+    return res.status(400).json({ errors: validationErrors });
   }
   req.body.email = validator.normalizeEmail(req.body.email, {
     gmail_remove_dots: false,

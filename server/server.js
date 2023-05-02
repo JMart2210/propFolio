@@ -45,6 +45,10 @@ app.use(passport.session());
 //Use flash messages for errors, info, ect...
 app.use(flash());
 
+//Body Parsing
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
 app.use("/property", propertyRoutes);
@@ -53,10 +57,6 @@ app.use("/api", apiRoutes);
 
 //Static Folder
 app.use(express.static("../client/public"));
-
-//Body Parsing
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 //Logging
 app.use(logger("dev"));
