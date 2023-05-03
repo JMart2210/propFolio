@@ -1,7 +1,29 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../style.css';
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/logout', {
+        method: 'GET',
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.success.msg);
+        navigate('/');
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <button
@@ -16,29 +38,29 @@ const Header = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarToggler">
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           <img className="nav-logo" src="/imgs/leveredgeLogo.png" alt="Leveredge Logo" />
-        </a>
+        </Link>
         <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
           <li className="nav-item active">
-            <a className="nav-link" href="/dash">
+            <Link className="nav-link" to="/dash">
               Dashboard
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/profile">
+            <Link className="nav-link" to="/profile">
               Profile
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a href="/logout" className="nav-link">
+            <button onClick={handleLogout} className="nav-link" style={{ border: 'none', background: 'transparent' }}>
               Logout
-            </a>
+            </button>
           </li>
           <li className="nav-item">
-            <a href="/logout" className="nav-link">
-              Account
-            </a>
+            <button onClick={()=>navigate('/login')} className="nav-link" style={{ border: 'none', background: 'transparent' }}>
+              Login
+            </button>
           </li>
         </ul>
       </div>

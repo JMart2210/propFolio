@@ -10,10 +10,10 @@ router.get("/", homeController.getIndex);
 router.get("/dash", ensureAuth, homeController.getDash);
 router.get("/profile", ensureAuth, propertiesController.getProfile);
 router.get("/feed", ensureAuth, propertiesController.getFeed);
-router.get("/login", authController.getLogin);
+// router.get("/login", authController.getLogin); //This is the old way of doing it
 router.post("/login", authController.postLogin);
 router.get("/logout", authController.logout);
-router.get("/signup", authController.getSignup);
+// router.get("/signup", authController.getSignup); //This is the old way of doing it
 router.post("/signup", authController.postSignup);
 
 module.exports = router;

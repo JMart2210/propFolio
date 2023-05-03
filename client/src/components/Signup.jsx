@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Signup.css'; // Don't forget to create a CSS file and import it
 
-const Signup = ({ messages }) => {
+const Signup = () => {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState([]); // This is for displaying error messages to the user
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,20 +22,22 @@ const Signup = ({ messages }) => {
         },
         body: JSON.stringify({ userName, email, password, confirmPassword }),
       });
-
-      if (response.ok) {
+      
+      const responseData = await response.json();
+    
+      if (response.ok && responseData.success) {
         // Redirect the user to the profile page after successful registration
-        window.location.href = '/profile';
+        navigate('/profile');
+      } else if (responseData.errors) {
+        setErrors(responseData.errors);
+        console.error('Error:', responseData);
       } else {
-        const errorData = await response.json();
-        setErrors(errorData.errors);
-        console.error('Error:', errorData);
+        console.error('Unexpected response:', responseData);
       }
     } catch (error) {
-      // console.error('Error:', error);
+      console.error('Error:', error);
     }
   };
-
   return (
     <main className="container-fluid signup-page">
       <div className="signup-container">
@@ -45,12 +49,12 @@ const Signup = ({ messages }) => {
                 {el.msg}
               </div>
             ))}
-          {messages.info &&
+          {/* {messages.info &&
             messages.info.map((el, index) => (
               <div key={index} className="alert alert-info">
                 {el.msg}
               </div>
-            ))}
+            ))} */}
           <form onSubmit={handleSubmit} className="signup-form">
             <div className="mb-3">
               <label htmlFor="userName" className="form-label">

@@ -12,6 +12,7 @@ const mainRoutes = require("./routes/main");
 const propertyRoutes = require("./routes/properties");
 const commentRoutes = require("./routes/comments");
 const apiRoutes = require("./routes/api");
+const userRoutes = require("./routes/user");
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -54,6 +55,7 @@ app.use("/", mainRoutes);
 app.use("/property", propertyRoutes);
 app.use("/comment", commentRoutes);
 app.use("/api", apiRoutes);
+app.use(userRoutes);
 
 //Static Folder
 app.use(express.static("../client/public"));
