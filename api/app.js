@@ -24,5 +24,3 @@ app.use("/api/messages", messageRoute);
 app.listen(8800, () => {
   console.log("Server is running!");
 });
-
-//code comment to check github version
